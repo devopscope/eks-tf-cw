@@ -4,13 +4,13 @@ metadata:
   annotations:
     argocd-autopilot.argoproj-labs.io/default-dest-server: https://kubernetes.default.svc
     argocd.argoproj.io/sync-options: PruneLast=true
-  name: tutorial-app-of-apps
+  name: app-of-apps
   namespace: argocd
 spec:
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"
-  description: tutorial argocd app-of-apps
+  description: argocd app-of-apps
   destinations:
     - namespace: "*"
       server: "*"
