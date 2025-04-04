@@ -1,0 +1,44 @@
+resource "aws_eks_node_group" "general" {
+  for_each = var.node_groups
+  
+  cluster_name    = aws_eks_cluster.this.name
+  version         = var.eks_version
+  node_group_name = each.key
+  node_role_arn   = aws_iam_role.nodes.arn
+
+  subnet_ids = var.subnet_ids
+
+  # Most likely, you want ON_DEMAND
+#   capacity_type  = "SPOT"
+#   instance_types = ["t3.small"]
+
+#   scaling_config {
+#     desired_size = 2
+#     max_size     = 2
+#     min_size     = 0
+#   }
+
+  capacity_type  = each.value.capacity_type
+  instance_types = each.value.instance_types
+
+  scaling_config {
+    desired_size = each.value.scaling_config.desired_size
+    max_size     = each.value.scaling_config.max_size
+    min_size     = each.value.scaling_config.min_size
+  }
+
+  update_config {
+    max_unavailable = 1
+  }
+
+  labels = {
+    role = each.key
+  }
+
+  depends_on = [ aws_iam_role_policy_attachment.nodes]
+
+  # Allow external changes without Terraform plan difference
+  lifecycle {
+    ignore_changes = [scaling_config[0].desired_size]
+  }
+}
