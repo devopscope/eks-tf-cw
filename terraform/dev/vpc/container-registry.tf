@@ -15,5 +15,5 @@ resource "aws_ecr_repository" "main" {
   tags = {
     environment = var.env
   }
-
+ 
 }
