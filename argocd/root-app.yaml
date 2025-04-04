@@ -14,3 +14,7 @@ spec:
     path: argocd/project
     repoURL: https://github.com/devopscope/eks-tf-cw.git
     targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
