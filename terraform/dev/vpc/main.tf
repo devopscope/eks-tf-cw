@@ -7,7 +7,7 @@ terraform {
     bucket         = "volkan-cw"
     key            = "terraform.tfstate"
     region         = "us-east-1"
-    dynamodb_table = "dev-cw-terraform-locks-table"
+    use_lockfile   = true
     encrypt        = true
   }
 }
