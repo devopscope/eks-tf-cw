@@ -119,7 +119,6 @@ web_modules/
 .env.local
 
 # parcel-bundler cache (https://parceljs.org/)
-.cache
 .parcel-cache
 
 # Next.js build output
