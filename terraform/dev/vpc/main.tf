@@ -31,22 +31,22 @@ module "vpc" {
   }
 }
 
-# module "eks" {
-#   source      = "../../modules/eks"
-#   env         = "dev"
-#   eks_name    = "cw"
-#   eks_version = "1.30"
-#   subnet_ids  = module.vpc.private_subnet_ids
-#   node_groups = {
-#     general = {
-#       capacity_type  = "SPOT"
-#       instance_types = ["t3.small"]
-#       scaling_config = {
-#         desired_size = 2
-#         max_size     = 3
-#         min_size     = 2
-#       }
-#     }
-#   }
-#
-# }
+module "eks" {
+  source      = "../../modules/eks"
+  env         = "dev"
+  eks_name    = "cw"
+  eks_version = "1.30"
+  subnet_ids  = module.vpc.private_subnet_ids
+  node_groups = {
+    general = {
+      capacity_type  = "SPOT"
+      instance_types = ["t3.small"]
+      scaling_config = {
+        desired_size = 2
+        max_size     = 3
+        min_size     = 2
+      }
+    }
+  }
+
+}
