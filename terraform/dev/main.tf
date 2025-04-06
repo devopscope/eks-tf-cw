@@ -13,7 +13,7 @@ terraform {
 }
 
 module "vpc" {
-  source = "../../modules/vpc"
+  source = "../modules/vpc"
 
   env = var.env
   vpc_cidr_block = var.vpc_cidr_block
@@ -33,7 +33,7 @@ module "vpc" {
 }
 
 module "eks" {
-  source      = "../../modules/eks"
+  source      = "../modules/eks"
   env         = var.env
   eks_name    = var.project_name
   eks_version = "1.30"
@@ -52,13 +52,30 @@ module "eks" {
 }
 
 module "rds_mysql" {
-  source = "../../modules/rds-mysql"
+  source = "../modules/rds-mysql"
   vpc_id = module.vpc.vpc_id
   private_subnet_ids = module.vpc.private_subnet_ids
-  db_password_secret_name = "mysql-db-password2"
+  db_password_secret_name = "mysql-db-password3"
   rds_instance_class = "db.t3.micro"
   allocated_storage = "10"
   db_name = "testdb"
   db_username = "admin"
   engine_version = "8.0"
+}
+
+
+# helm install argocd -n argocd --create-namespace argo/argo-cd --version 7.3.11 -f terraform/values/argocd.yaml
+resource "helm_release" "argocd" {
+  name = "argocd"
+
+  repository       = "https://argoproj.github.io/argo-helm"
+  chart            = "argo-cd"
+  namespace        = "argocd"
+  create_namespace = true
+  version          = "7.3.11"
+
+  values = [file("values/argocd.yaml")]
+
+  # depends_on = [aws_eks_node_group.general]
+  depends_on = [module.eks.node_group_id]
 }
