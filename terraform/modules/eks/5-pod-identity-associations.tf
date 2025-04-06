@@ -24,12 +24,12 @@ resource "aws_iam_role_policy_attachment" "secrets_manager" {
   role       = aws_iam_role.argocd_image_updater.name
 }
 
-resource "aws_eks_pod_identity_association" "secrets_manager" {
-  cluster_name    = aws_eks_cluster.this.name
-  namespace       = "dev"
-  service_account = "nodejs-app-service-account"
-  role_arn        = aws_iam_role.argocd_image_updater.arn
-}
+# resource "aws_eks_pod_identity_association" "secrets_manager" {
+#   cluster_name    = aws_eks_cluster.this.name
+#   namespace       = "dev"
+#   service_account = "nodejs-app-service-account"
+#   role_arn        = aws_iam_role.argocd_image_updater.arn
+# }
 
 resource "aws_eks_pod_identity_association" "external_secrets" {
   cluster_name    = aws_eks_cluster.this.name

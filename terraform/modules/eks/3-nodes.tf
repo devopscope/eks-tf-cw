@@ -8,16 +8,6 @@ resource "aws_eks_node_group" "general" {
 
   subnet_ids = var.subnet_ids
 
-  # Most likely, you want ON_DEMAND
-#   capacity_type  = "SPOT"
-#   instance_types = ["t3.small"]
-
-#   scaling_config {
-#     desired_size = 2
-#     max_size     = 2
-#     min_size     = 0
-#   }
-
   capacity_type  = each.value.capacity_type
   instance_types = each.value.instance_types
 
