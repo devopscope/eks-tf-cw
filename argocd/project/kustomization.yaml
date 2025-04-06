@@ -5,3 +5,4 @@ resources:
   - project.yaml
   - applicationset.yaml
   - tools-applicationset.yaml
+  - slack-secret.yaml
