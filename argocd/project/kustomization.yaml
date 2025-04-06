@@ -4,3 +4,4 @@ resources:
   - git-repo-secret.yaml
   - project.yaml
   - applicationset.yaml
+  - tools-applicationset.yaml
